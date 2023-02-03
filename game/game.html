@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<link rel="preload" href="pipe.png" as="image" />
+	<link rel="preload" href="bg.jpg" as="image" />
+	<link rel="preload" href="white_frame.png" as="image" />
+	<link rel="preload" href="bg_eff60.png" as="image" />
+	<link rel="preload" href="Q1_WB.png" as="image" />
+	<link rel="preload" href="title_1.png" as="image" />
+	<link rel="preload" href="title_final_1.png" as="image" />
+	<link rel="preload" href="su_1.png" as="image" />
+	<link rel="preload" href="send_1.png" as="image" />
+	<link rel="preload" href="white_frame.png" as="image" />
+	<link rel="preload" href="turn.png" as="image" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5, user-scalable=no" />
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script src="jquery.backgroundpos.js"></script>
+	<style>
+		body,
+		body * {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		#loading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: transparent;
+			overflow: hidden;
+		}
+
+		#loading img {
+			width: 70px;
+		}
+
+		#stage {
+			width: 768px;
+			height: 843px;
+			position: relative;
+			background: transparent;
+			overflow: hidden;
+			display: none;
+		}
+
+		#bg {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-image: url(bg.jpg);
+			z-index: 1;
+		}
+
+		#panel {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-image: url(pipe.png);
+			background-position: -2372px -156px;
+			z-index: 3;
+		}
+
+		#panel>img {
+			/*display: none;*/
+		}
+
+		#boder {
+			width: 101%;
+			height: 101%;
+			position: absolute;
+			top: -5px;
+			left: -5px;
+			background-image: url(white_frame.png);
+			background-size: cover;
+			z-index: 4;
+		}
+
+		#bodermask {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-image: url(bg_eff60.png);
+			background-size: cover;
+			opacity: 0.5;
+			z-index: 5;
+		}
+
+		#ip {
+			position: absolute;
+			top: 279px;
+			left: 31px;
+			z-index: 7;
+		}
+
+		#ip>img {
+			width: 50%;
+			height: auto;
+		}
+
+		#title {
+			position: absolute;
+			top: 24px;
+			left: 172px;
+			z-index: 5;
+		}
+
+		#logo {
+			position: absolute;
+			top: 302px;
+			left: 385px;
+			z-index: 5;
+		}
+
+		#start {
+			position: absolute;
+			top: 540px;
+			left: 117px;
+			z-index: 5;
+			transition: all 0.5s ease-in-out;
+			cursor: pointer;
+		}
+
+		.add_transform {
+			transform: scale(1.1);
+		}
+
+		#qaarea {
+			width: 90%;
+			height: 30.5%;
+			position: absolute;
+			top: 29.5%;
+			left: 5%;
+			z-index: 6;
+			display: none;
+		}
+
+		#question {
+			width: 96%;
+			height: 55%;
+			position: absolute;
+			top: 3%;
+			left: 2.5%;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		#ansa {
+			width: 47%;
+			height: 45%;
+			position: absolute;
+			top: 53%;
+			left: 4%;
+			background-position: 90%;
+			background-repeat: no-repeat;
+			cursor: pointer;
+		}
+
+		#ansb {
+			width: 47%;
+			height: 45%;
+			position: absolute;
+			top: 53%;
+			left: 51%;
+			background-position: 90%;
+			background-repeat: no-repeat;
+			cursor: pointer;
+		}
+
+		#answerarea {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-image: url(Q1_WB.png);
+			background-size: cover;
+			z-index: 6;
+			display: none;
+		}
+
+		#ansmsgbg {
+			width: 90%;
+			height: 44%;
+			position: absolute;
+			top: 24%;
+			left: 5.3%;
+			background-image: url(turn.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			z-index: 6;
+		}
+
+		#ansmsg {
+			width: 90%;
+			height: 15%;
+			position: absolute;
+			top: 40%;
+			left: 5.3%;
+			background-position: center;
+			background-repeat: no-repeat;
+			z-index: 6;
+		}
+
+		#ansip {
+			position: absolute;
+			top: 65%;
+			display: none;
+			z-index: 6;
+		}
+
+		#ansip>img {
+			width: 46%;
+			padding-left: 53%;
+		}
+
+		.showpipe {
+			position: absolute;
+			display: none;
+			z-index: 3;
+		}
+
+		#showa {
+			position: absolute;
+			width: 50%;
+			height: 39.5%;
+			bottom: 0px;
+			left: -50px;
+			background-position: top left;
+			background-repeat: no-repeat;
+			z-index: 3;
+			display: none;
+		}
+
+		#showb {
+			position: absolute;
+			width: 50%;
+			height: 39.5%;
+			bottom: 0px;
+			right: -30px;
+			background-position: top left;
+			background-repeat: no-repeat;
+			z-index: 3;
+			display: none;
+		}
+
+		#hide {
+			display: none;
+		}
+
+		#success {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 5;
+			display: none;
+		}
+
+		#congrats,
+		#slogan,
+		#subslogan,
+		#successip,
+		#enterdraw {
+			position: absolute;
+			display: none;
+		}
+
+		#congrats {
+			width: 70%;
+			height: 40%;
+			top: 30%;
+			left: 15%;
+			background-image: url(win.png);
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		#successip {
+			position: absolute;
+			top: 290px;
+			left: 120px;
+			z-index: 2;
+		}
+
+		#successip>img {
+			width: 53%;
+			height: auto;
+		}
+
+		#slogan {
+			width: 93%;
+			height: 26%;
+			position: absolute;
+			top: 19%;
+			left: 3.5%;
+			background-image: url(title_final_1.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0;
+		}
+
+		#subslogan {
+			width: 40%;
+			height: 40%;
+			position: absolute;
+			top: 28%;
+			left: 55%;
+			background-image: url(dm_text.png);
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		#enterdraw {
+			width: 60%;
+			height: 20%;
+			position: absolute;
+			top: 69.5%;
+			left: 20%;
+			background-image: url(btn_final.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			cursor: pointer;
+		}
+
+		#drawform {
+			width: 96%;
+			height: 96%;
+			position: absolute;
+			top: 2%;
+			left: 2%;
+			background-image: url(Q1_WB.png);
+			background-size: cover;
+			z-index: 7;
+			display: none;
+		}
+
+		#form {
+			width: 100%;
+			height: 50%;
+			position: absolute;
+			top: 20%;
+			left: 0%;
+			background-image: url(send_1.png);
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		#send {
+			width: 40%;
+			height: 11%;
+			position: absolute;
+			top: 55%;
+			left: 30%;
+			cursor: pointer;
+		}
+
+		#sendloading {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: transparent;
+			overflow: hidden;
+			display: none;
+		}
+
+		#sendloading img {
+			width: 70px;
+		}
+
+		#close {
+			width: 11%;
+			height: 10%;
+			position: absolute;
+			top: 22%;
+			left: 80%;
+			cursor: pointer;
+		}
+
+		#field {
+			position: absolute;
+			width: 60%;
+			top: 28%;
+			left: 30%;
+		}
+
+		.text {
+			border: solid 3px #147bac;
+			border-radius: 8px;
+			width: 100%;
+			height: 42px;
+			margin-bottom: 12px;
+			padding: 0 2px;
+			color: #365168;
+			font-size: 35px;
+			line-height: 45px;
+		}
+
+		#confirm {
+			width: 100%;
+			height: 50%;
+			position: absolute;
+			top: 20%;
+			left: 0%;
+			background-image: url(su_1.png);
+			background-position: center;
+			background-repeat: no-repeat;
+			z-index: 7;
+			display: none;
+		}
+
+		#confirmbtn {
+			width: 40%;
+			height: 21%;
+			position: absolute;
+			top: 67%;
+			left: 30%;
+			cursor: pointer;
+		}
+
+		#showgif,
+		#showgif1 {
+			position: absolute;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="hide">
+		<img src="loading.gif">
+		<img src="testn.gif">
+		<img src="firework.gif">
+		<img src="water2.gif">
+		<img src="IP0.gif">
+		<img src="IP1.gif">
+		<img src="IP2.gif">
+		<img id="pipe">
+		<audio id="bgaudio" preload="auto" loop src="FunnyGamePuzzleMusic.mp3"></audio>
+		<audio id="mistake" preload="auto" src="Mistake.mp3"></audio>
+		<audio id="correct" preload="auto" src="correct.mp3"></audio>
+	</div>
+	<div id="loading"><img src="loading.gif"></div>
+	<div id="stage">
+		<div id="bg"></div>
+		<div id="panel"><img id="showgif"><img id="showgif1"></div>
+		<div id="boder"></div>
+		<div id="bodermask"></div>
+		<div id="ip"><img src="IP0.gif"></div>
+		<div id="title"><img src="title_1.png"></div>
+		<div id="logo"><img src="logo_1.png"></div>
+		<div id="start"><img src="btn_start.png"></div>
+		<div id="qaarea">
+			<div id="question"></div>
+			<div id="ansa"></div>
+			<div id="ansb"></div>
+		</div>
+		<div id="answerarea">
+			<div id="ansmsgbg"></div>
+			<div id="ansmsg"></div>
+			<div id="ansip"><img src="IP2.gif"></div>
+		</div>
+		<div id="success">
+			<div id="congrats"></div>
+			<div id="slogan"></div>
+			<div id="subslogan"></div>
+			<div id="successip"><img src="IP1.gif"></div>
+			<div id="enterdraw"></div>
+		</div>
+		<div id="drawform">
+			<div id="form">
+				<div id="field">
+					<input type="text" id="name" class="text" size="20" placeholder="請輸入姓名"><br>
+					<input type="text" id="tel" class="text" size="10" placeholder="請輸入手機 EX：09XXXXXXXX"><br>
+					<input type="text" id="email" class="text" size="40" placeholder="請輸入電子郵件信箱"><br>
+				</div>
+			</div>
+			<div id="send"></div>
+			<div id="sendloading"><img src="loading.gif"></div>
+			<div id="close"></div>
+		</div>
+		<div id="confirm">
+			<div id="confirmbtn"></div>
+		</div>
+	</div>
+</body>
+
+</html>
+<script>
+	var flag, setArray, setPathArray, nowQuestion = 1, nextPath = 1, bgFlag = false, intervalFlag;
+	$(document).ready(function () {
+		$("#pipe").on("load", function () { bgFlag = true; }).attr("src", "pipe.png");
+		intervalFlag = setInterval(function () {
+			if (bgFlag == true) {
+				clearInterval(intervalFlag);
+				setTimeout(function () {
+					$("#loading").hide(0);
+					showGame();
+				}, 1000);
+			}
+		}, 300);
+	});
+
+	function showGame() {
+		$("#stage").show(0);
+		flag = setInterval(function () {
+			$("#start").toggleClass("add_transform");
+		}, 500);
+
+		$("#start").one("click", function () {
+			clearInterval(flag);
+			$("#start").removeClass("add_transform");
+			$("#bgaudio")[0].play();
+			randQuestion();
+			setTimeout(function () {
+				$("#start").fadeOut({ duration: 400, queue: false });
+				$("#ip").fadeOut({ duration: 700, queue: false });
+				$("#logo").fadeOut({ duration: 700, queue: false });
+				$("#title").animate({ "top": "-320px" }, 700).promise().done(function () {
+					setQa();
+					$("#panel").animate({ "background-position-y": "-=962" }, 1500).promise().done(function () {
+						$("#qaarea").fadeIn(400);
+						$("#ip>img").css("width", "73%");
+						$("#ip").css({ "top": "547px", "left": "475px" }).delay(1000).fadeIn(500);
+						$("#ansa, #ansb").one("click", function () { checkStep($(this)); })
+					});
+				});
+			}, 1000);
+		});
+	}
+
+	function randQuestion() {
+		setArray = [{
+			q: 'QA_Q1',
+			a: ['QA_Q1_T', 'QA_Q1_F'],
+			f: 'QA_Q1_FT'
+		}, {
+			q: 'QA_Q2',
+			a: ['QA_Q2_T', 'QA_Q2_F'],
+			f: 'QA_Q2_FT'
+		}, {
+			q: 'QA_Q3',
+			a: ['QA_Q3_T', 'QA_Q3_F'],
+			f: 'QA_Q3_FT'
+		}, {
+			q: 'QA_Q4',
+			a: ['QA_Q4_T', 'QA_Q4_F'],
+			f: 'QA_Q4_FT'
+		}, {
+			q: 'QA_Q5',
+			a: ['QA_Q5_T', 'QA_Q5_F'],
+			f: 'QA_Q5_FT'
+		}, {
+			q: 'QA_Q6',
+			a: ['QA_Q6_T', 'QA_Q6_F'],
+			f: 'QA_Q6_FT'
+		}, {
+			q: 'QA_Q7',
+			a: ['QA_Q7_T', 'QA_Q7_F'],
+			f: 'QA_Q7_FT'
+		}, {
+			q: 'QA_Q8',
+			a: ['QA_Q8_T', 'QA_Q8_F'],
+			f: 'QA_Q8_FT'
+		}, {
+			q: 'QA_Q9',
+			a: ['QA_Q9_T', 'QA_Q9_F'],
+			f: 'QA_Q9_FT'
+		}, {
+			q: 'QA_Q10',
+			a: ['QA_Q10_T', 'QA_Q10_F'],
+			f: 'QA_Q10_FT'
+		}];
+		setArray.sort(function (a, b) {
+			return 0.5 - Math.random();
+		});
+
+		setPathArray = [{
+			i: "S1",
+			a: ["x:+=1051", "y:-=392", "3"],
+			sa: ["top:60.2%", "left:-90.1%"],
+			b: ["y:-=170", "x:-=817", "2"],
+			sb: ["top:60.2%", "left:54.1%"]
+		}, {
+			i: "S2",
+			a: ["y:-=709", "y:-=80", "4"],
+			sa: ["top:60.2%", "left:11.9%"],
+			b: ["y:-=395", "x:-=803", "y:-=394", "x:+=803", "4"],
+			sb: ["top:60.2%", "left:54%"]
+		}, {
+			i: "S2",
+			a: ["y:-=710", "y:-=78", "5"],
+			sa: ["top:60.2%", "left:11.8%"],
+			b: ["y:-=395", "x:-=803", "y:-=393", "x:+=803", "5"],
+			sb: ["top:60.15%", "left:54%"]
+		}, {
+			i: "S4",
+			a: ["y:-=350", "x:+=1055", "y:-=498", "8"],
+			sa: ["top:60.2%", "left:-99.3%"],
+			b: ["y:-=300", "x:-=400", "y:-=313", "x:-=400", "7"],
+			sb: ["top:60.2%", "left:54.3%"]
+		}, {
+			i: "S5",
+			a: ["y:-=250", "x:+=417", "y:+=170", "x:+=592", "6"],
+			sa: ["top:48.2%", "left:-36.4%"],
+			b: ["y:-=627", "x:-=813", "8"],
+			sb: ["top:60.1%", "left:54.1%"]
+		}, {
+			i: "S6",
+			a: ["y:-=350", "x:+=300", "y:-=450", "x:-=530", "9"],
+			sa: ["top:60.15%", "left:-29.2%"],
+			b: ["y:-=550", "x:-=230", "y:-=250", "9"],
+			sb: ["top:60.2%", "left:54.15%"]
+		}, {
+			i: "S7",
+			a: ["y:-=350", "x:+=800", "y:-=264", "10"],
+			sa: ["top:60.25%", "left:-77.8%"],
+			b: ["y:-=614", "x:+=800", "10"],
+			sb: ["top:60.3%", "left:-9.2%"]
+		}, {
+			i: "S8",
+			a: ["y:-=253", "x:+=1592", "9"],
+			sa: ["top:60.25%", "left:-112.4%"],
+			b: ["y:-=379", "x:-=1055", "10"],
+			sb: ["top:60.3%", "left:54.25%"]
+		}, {
+			i: "S9",
+			a: ["y:-=795", "0"],
+			sa: ["top:59.9%", "left:11.67%"],
+			b: ["y:-=150", "x:-=350", "y:-=550", "x:+=350", "y:-=95", "0"],
+			sb: ["top:60.2%", "left:54.26%"]
+		}, {
+			i: "S9",
+			a: ["y:-=795", "0"],
+			sa: ["top:60.2%", "left:11.66%"],
+			b: ["y:-=150", "x:-=350", "y:-=550", "x:+=350", "y:-=95", "0"],
+			sb: ["top:60.17%", "left:54.33%"]
+		}];
+	}
+
+	function setQa() {
+		var temp = setArray[nowQuestion - 1].a;  //當前選擇的答案
+		$("#question").css("background-image", "url(" + setArray[nowQuestion - 1].q + ".png)"); // 當前題目
+		temp.sort(function (a, b) {
+			return 0.5 - Math.random();
+		});
+		$("#ansa").css("background-image", "url(" + temp[0] + ".png)");
+		$("#ansb").css("background-image", "url(" + temp[1] + ".png)");
+	}
+
+	function checkStep(obj) {
+		var option = obj.attr("id").slice(-1);
+		var ans = obj.css("background-image").split("/").reverse()[0].split(".png")[0].slice(-1);
+		console.log(obj.css("background-image").substr(-7, 1))
+		var path = setPathArray[nextPath - 1];
+		$("#ansa, #ansb").off("click");
+		if (ans == "T") {
+			$("#correct")[0].play();
+			$("#ip>img").attr("src", "IP1.gif");
+
+			$("#showgif,#showgif1").off("load");
+			$("#showgif").attr("src", "").attr("src", "firework.gif");
+			$("#showgif1").attr("src", "").attr("src", "testn.gif");
+
+			$("#stage").append("<div id='show" + option + nowQuestion + "' class='showpipe'><img src='" + path.i + "_" + option.toUpperCase() + "_" + ans + ".png'></div");
+
+			path["s" + option].forEach(function (v) {
+				let val = v.split(":");
+				$("#show" + option + nowQuestion).css(val[0], val[1]);
+			});
+
+			$("#show" + option + nowQuestion).fadeIn(400).fadeOut(400).fadeIn(400).fadeOut(400).fadeIn(400).promise().done(function () {
+				$("#showa" + (nowQuestion - 1) + ",#showb" + (nowQuestion - 1)).fadeOut(500);
+				path[option].forEach(function (v, i) {
+					let val = [], move = {}, movearea = {}, showtime;
+					if (i != path[option].length - 1) {
+						val = v.split(":");
+						move["background-position-" + val[0]] = val[1];
+						(val[0] == "x") ? movearea["left"] = val[1] : movearea["top"] = val[1];
+						if (i != path[option].length - 2) {
+							$("#panel").animate(move, 1000);
+							$("#qaarea").animate(movearea, 1000);
+							$("#show" + option + nowQuestion).animate(movearea, 1000);
+						} else {
+							$("#panel").animate(move, 1000);
+							$("#qaarea").animate(movearea, 1000);
+							$("#show" + option + nowQuestion).animate(movearea, 1000);
+						}
+					} else {
+						if (v != "0") {
+							nextPath = v;
+							$("#qaarea").fadeOut(0, function () { setQa(); }).fadeIn(400).animate({ "top": "30%", "left": "5%" }, 0).promise().done(function () {
+								$("#ip>img").attr("src", "IP0.gif");
+								$("#ansa, #ansb").one("click", function () { checkStep($(this)); });
+							});
+						} else {
+							$("#ip>img").hide(0);
+							$("#qaarea").hide(0);
+							$("#ansa, #ansb").off("click");
+							(option == "a") ? showtime = 1500 : showtime = 5500;
+							$("#success").show(showtime).promise().done(function () {
+								$("#congrats").fadeIn(1500).delay(500).fadeOut(1000).promise().done(function () {
+									showMsg();
+								});
+							});
+
+						}
+					}
+				});
+				nowQuestion++;
+			});
+		} else {
+			$("#mistake")[0].play();
+			$("#ip").hide(0);
+
+			$("#showgif,#showgif1").off("load");
+			$("#showgif").attr("src", "").attr("src", "water2.gif");
+			$("#showgif1").attr("src", "");
+
+			$("#stage").append("<div id='show" + option + nowQuestion + "' class='showpipe'><img src='" + path.i + "_" + option.toUpperCase() + "_" + ans + ".png'></div");
+
+			path["s" + option].forEach(function (v) {
+				let val = v.split(":");
+				$("#show" + option + nowQuestion).css(val[0], val[1]);
+			});
+
+			$("#show" + option + nowQuestion).fadeIn(400).fadeOut(400).fadeIn(400).fadeOut(400).fadeIn(400).fadeOut(400).promise().done(function () {
+				$("#showa" + (nowQuestion - 1) + ",#showb" + (nowQuestion - 1)).fadeOut(500);
+				$("#ansmsg").css("background-image", "url(" + setArray[nowQuestion - 1].f + ".png)");
+				$("#answerarea").show(0);
+				$("#ansip").show(0);
+				$("#ansmsgbg").one("click", function () {
+					$("#ansmsgbg").hide(0);
+					$("#ansmsg").hide(0);
+
+					$("#answerarea").hide(0);
+					$("#qaarea").hide(0);
+
+					resetGame();
+
+					/*$("#answerarea").fadeOut(500).promise().done(function(){
+						(option=="a")?option="b":option="a";
+						ans="T";
+		
+						$("#stage").append("<div id='show" + option + nowQuestion + "' class='showpipe'><img src='" + path.i + "_" + option.toUpperCase() + "_" + ans + ".png'></div");
+		
+						path["s" + option].forEach(function(v){
+						  let val=v.split(":");
+						  $("#show" + option + nowQuestion).css(val[0],val[1]);
+						});
+		
+						$("#ip>img").attr("src","IP1.gif");
+						$("#ansip").hide(0);
+						$("#ip").show(0);
+						$("#show" + option + nowQuestion).fadeIn(400).fadeOut(400).fadeIn(400).fadeOut(400).fadeIn(400).promise().done(function(){
+							path[option].forEach(function(v,i){
+							  let val=[],move={},movearea={};
+							  if (i!=path[option].length-1) {
+								  val=v.split(":");
+								  move["background-position-"+val[0]]=val[1];
+								  (val[0]=="x")?movearea["left"]=val[1]:movearea["top"]=val[1];
+								  if (i!=path[option].length-2){
+									  $("#panel").animate(move,1000);
+									  $("#qaarea").animate(movearea,1000);
+									  $("#show" + option + nowQuestion).animate(movearea,1000);
+								  } else {
+									  $("#panel").animate(move,1000);
+									  $("#qaarea").animate(movearea,1000);
+									  $("#show" + option + nowQuestion).animate(movearea,1000);
+								  }
+							  } else {
+								  if (v!="0") {
+									  nextPath=v;
+									  nowQuestion++;
+									  $("#qaarea").fadeOut(0,function(){setQa();}).fadeIn(400).animate({"top":"30%","left":"5%"},0).promise().done(function(){
+										  $("#ip>img").attr("src","IP0.gif");
+										  $("#ansa, #ansb").one("click", function(){checkStep($(this));});
+									  });
+								  } else {
+									  $("#ip>img").hide(0);
+									  $("#qaarea").hide(0);
+									  $("#ansa, #ansb").off("click");
+									  (option=="a")?showtime=1500:showtime=5500;
+									  $("#success").show(showtime).promise().done(function(){
+										  $("#congrats").fadeIn(1500).delay(500).fadeOut(1000).promise().done(function(){
+											 showMsg();
+										  });
+									  });
+								  }
+							  }
+							});
+						});
+				   });*/
+				});
+			});
+		}
+	}
+
+	function showMsg() {
+		$("#successip").show(200).promise().done(function () {
+			$("#slogan").show(0).animate({ "opacity": "1", "top": "6%" }, 1000).promise().done(function () {
+				$("#subslogan").fadeIn(500).promise().done(function () {
+					$("#enterdraw").fadeIn(500).one("click", function () { showForm(); });
+				});
+			});
+		});
+	}
+
+	function showForm() {
+		$("#drawform").show(0);
+		$("#name,#tel,#email").on("focus", function () { $(this).css("background", "transparent") });
+		$("#close").one("click", function () { $("#drawform").hide(0); resetGame(); });
+		$("#send").one("click", function () { checkForm(); });
+	}
+
+	function resetGame() {
+		nowQuestion = 1;
+		nextPath = 1;
+		$(".showpipe").remove();
+		$("#success,#successip,#subslogan,#enterdraw,#drawform").hide(0);
+		$("#slogan").css({ "opacity": "0", "top": "19%" });
+		$("#	").css("background-position", "-2372px -156px");
+		$("#qaarea").css({ "top": "29.5%", "left": "5%" });
+		$("#ip").css({ "top": "279px", "left": "31px" });
+		$("#ip>img").css({ "width": "50%" }).attr("src", "IP0.gif");
+		$("#title").css({ "top": "24px", "left": "172px" });
+		$("#bgaudio")[0].pause();
+		$("#start,#ip,#ip>img,#logo,#title,#form,#ansmsgbg,#ansmsg").show(0);
+		$("#start,#ansmsgbg,#ansa,#ansb,#confirmbtn,#send,#close,#enterdraw").off("click");
+		showGame();
+	}
+
+	function checkForm() {
+		let is_error = false;
+		$("#name").val($("#name").val().replace(/'- /g, ""));
+		$("#tel").val($("#tel").val().replace(/'- /g, ""));
+		$("#email").val($("#email").val().replace(/'- /g, ""));
+
+		if ($("#name").val() == "" || $("#name").val().length < 2) {
+			$("#name").css("background", "#f44336");
+			is_error = true;
+		}
+		if ($("#tel").val() == "" || $("#tel").val().length < 10 || !$("#tel").val().match(/^09\d{8}/)) {
+			$("#tel").css("background", "#f44336");
+			is_error = true;
+		}
+		if ($("#email").val() == "" || !$("#email").val().match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/)) {
+			$("#email").css("background", "#f44336");
+			is_error = true;
+		}
+		if (!is_error) {
+			let name = $('#name').val(), tel = $('#tel').val(), email = $("#email").val();
+
+			$("#sendloading").show(0);
+			$("#send").off("click");
+
+			$.ajax({
+				type: "POST",
+				async: false,
+				dataType: "jsonp",
+				url: "https://www.sales-frontier.com/adform/cpami2021event/action1.php",
+				data: {
+					"name": name,
+					"email": email,
+					"tel": tel
+				},
+				jsonp: "mycallback",
+				jsonpCallback: "result",
+				success: function (data) {
+					var result = data;
+					if (result.success == true) {
+						$("#name,#tel,#email").css("background", "transparent").val("");
+						$("#sendloading").hide(0);
+						$("#form").hide(0);
+						$("#confirm").show(0);
+						$("#confirmbtn").one("click", function () {
+							$("#confirm").hide(0);
+							resetGame();
+						});
+					}
+				}
+			});
+		} else {
+			$("#send").one("click", function () { checkForm(); });
+		}
+	}
+
+
+	// 網站
+	window.addEventListener('resize', function () {
+		clearTimeout(timeout);
+		var timeout = setTimeout(checkWindowWidth, 250);
+	});
+
+	function checkWindowWidth() {
+		var windowWidth = $(window).width();
+		var rate = windowWidth / 768;
+		var finalWidth = 768 * rate;
+		var finalHeight = 843 * rate;
+		sendGameAreaHeight(finalHeight);
+		if (windowWidth < 768) {
+			var horizontalMovement = (768 - finalWidth) / 2;
+			var verticalMovement = (843 - finalHeight) / 2;
+			console.log('verticalMovement', verticalMovement);
+			$('#stage').css({
+				'transform': 'scale(' + rate + ')',
+				'left': '-' + horizontalMovement + 'px',
+				'top': '-' + verticalMovement + 'px',
+			})
+		} else {
+			$('#stage').css({
+				'transform': 'initial',
+				'left': 'initial',
+				'top': 'initial',
+			})
+		}
+	}
+
+	function sendGameAreaHeight(height) {
+		parent.window.changeGameAreaHeight(height);
+	}
+</script>

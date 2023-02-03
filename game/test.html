@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div{
+            transition-property: opacity;
+            opacity: 1;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            transition-duration:3s;
+        }
+        .hide{
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="div" class="div"></div>
+    <button id="button">ddd</button>
+    <script>
+        const button = document.getElementById('button');
+        button.addEventListener('click',()=>{
+            document.getElementById('div').classList.add('hide')
+        })
+        document.getElementById('div').addEventListener('transitionend',()=>{
+            alert('結束')
+        })
+    </script>
+</body>
+</html>

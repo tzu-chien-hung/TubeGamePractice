@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦊🍎Tina Kevin😎💜</title>
+    <link rel="preload" href="./images/pipe.png" as="image" />
+    <link rel="preload" href="./images/bg.jpg" as="image" />
+    <link rel="preload" href="./images/white_frame.png" as="image" />
+    <link rel="preload" href="./images/bg_eff60.png" as="image" />
+    <link rel="preload" href="./images/Q1_WB.png" as="image" />
+    <link rel="preload" href="./images/title_1.png" as="image" />
+    <link rel="preload" href="./images/title_final_1.png" as="image" />
+    <link rel="preload" href="./images/su_1.png" as="image" />
+    <link rel="preload" href="./images/send_1.png" as="image" />
+    <link rel="preload" href="./images/white_frame.png" as="image" />
+    <link rel="preload" href="./images/turn.png" as="image" />
+    <link rel="stylesheet" href="game.css">
+    <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
+    <style>
+        div.breadcrumbs>ol>li:nth-of-type(3)>a>span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="window"><!-- 背景圖片們 -->
+        <img class="img" src="./images/bg.jpg" alt="">
+        <img class="img" src="./images/bg_eff60.png" alt="">
+        <img id="tube_bg" src="./images/pipe.png" alt="">
+        <img class="img" src="./images/white_frame.png" alt="">
+        <div class="page_home"> <!-- 首頁圖片內容 -->
+            <img class="page_home_img" id="page_home_ip" src="./images/IP0.gif" alt="">
+            <img id="page_home_title_1" src="./images/title_1.png" alt="">
+            <img class="page_home_img" id="page_home_logo" src="./images/logo_1.png" alt="">
+            <img class="page_home_img" id="page_home_btn" src="./images/btn_start.png" alt="">
+        </div>
+        <div id="qablock"> <!-- 問題定位在視窗中固定位置 -->
+            <div id="ques"></div>
+            <div id="ansA"></div>
+            <div id="ansB"></div>
+        </div>
+    </div>
+    <script>
+        let page_home_ip = document.getElementById('page_home_ip');
+        let page_home_title_1 = document.getElementById('page_home_title_1');
+        let page_home_logo = document.getElementById('page_home_logo');
+        let page_home_btn = document.getElementById('page_home_btn');
+        let tube_bg = document.getElementById('tube_bg');
+        let ques = document.getElementById('ques');
+        let ansA = document.getElementById('ansA');
+        let ansB = document.getElementById('ansB');
+        page_home_btn.addEventListener('click', () => {
+            page_home_title_1.classList.add("hidden_title");
+            page_home_ip.classList.add("hidden");
+            page_home_logo.classList.add("hidden");
+            page_home_btn.classList.add("hidden");
+            setInterval((() => {
+                page_home_ip.style = "display:none";
+                page_home_logo.style = "display:none";
+                page_home_btn.style = "display:none";
+                page_home_title_1.style = "display:none";
+                tube_bg.style = "top:-1120px"
+            }), 1000);
+            Question();
+            // console.log(e)
+        })
+        // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
+        //     向右滑
+        // }
+
+    </script>
+
+
+
+    <script>
+        // let array = ['ans1','ans2'];
+        function Question() {
+            qaArray = [{
+                q: 'QA_Q1',
+                a: ['QA_Q1_T', 'QA_Q1_F'],
+                f: 'QA_Q1_FT'
+            }, {
+                q: 'QA_Q2',
+                a: ['QA_Q2_T', 'QA_Q2_F'],
+                f: 'QA_Q2_FT'
+            }, {
+                q: 'QA_Q3',
+                a: ['QA_Q3_T', 'QA_Q3_F'],
+                f: 'QA_Q3_FT'
+            }, {
+                q: 'QA_Q4',
+                a: ['QA_Q4_T', 'QA_Q4_F'],
+                f: 'QA_Q4_FT'
+            }, {
+                q: 'QA_Q5',
+                a: ['QA_Q5_T', 'QA_Q5_F'],
+                f: 'QA_Q5_FT'
+            }, {
+                q: 'QA_Q6',
+                a: ['QA_Q6_T', 'QA_Q6_F'],
+                f: 'QA_Q6_FT'
+            }, {
+                q: 'QA_Q7',
+                a: ['QA_Q7_T', 'QA_Q7_F'],
+                f: 'QA_Q7_FT'
+            }, {
+                q: 'QA_Q8',
+                a: ['QA_Q8_T', 'QA_Q8_F'],
+                f: 'QA_Q8_FT'
+            }, {
+                q: 'QA_Q9',
+                a: ['QA_Q9_T', 'QA_Q9_F'],
+                f: 'QA_Q9_FT'
+            }, {
+                q: 'QA_Q10',
+                a: ['QA_Q10_T', 'QA_Q10_F'],
+                f: 'QA_Q10_FT'
+            }];
+            qaArray.sort((a, b) => {
+                return Math.random() - 0.5;
+            });
+            console.log(qaArray);
+        }
+
+        
+        // let obj = {
+		// 	q: 'QA_Q10',
+		// 	a: [{png : 'QA_Q10_T',ans: true}, {png: 'QA_Q10_F', ans : false}],
+		// 	f: 'QA_Q10_FT'
+		// };
+        //  let ans = obj.css("background-image").split("/").reverse()[0].split(".png")[0].slice(-1);
+        //  'url("http://127.0.0.1:5500/game/QA_Q9_T.png")'
+        // ['url("http:',"",'127.0.0.1:5500','game','QA_Q9_T.png']
+        // Math.random
+    </script>
+</body>
+
+</html>
