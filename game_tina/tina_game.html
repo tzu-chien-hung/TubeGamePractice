@@ -23,25 +23,44 @@
         div.breadcrumbs>ol>li:nth-of-type(3)>a>span {
             color: red;
         }
+
+        .bg_style_ques {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+        .bg_style_ans {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: right;
+        }
     </style>
 </head>
 
 <body>
-    <div class="window"><!-- 背景圖片們 -->
+    <div class="window">
+        <!-- 背景圖片們 -->
         <img class="img" src="./images/bg.jpg" alt="">
         <img class="img" src="./images/bg_eff60.png" alt="">
         <img id="tube_bg" src="./images/pipe.png" alt="">
         <img class="img" src="./images/white_frame.png" alt="">
-        <div class="page_home"> <!-- 首頁圖片內容 -->
+        <div class="page_home">
+            <!-- 首頁圖片內容 -->
             <img class="page_home_img" id="page_home_ip" src="./images/IP0.gif" alt="">
             <img id="page_home_title_1" src="./images/title_1.png" alt="">
             <img class="page_home_img" id="page_home_logo" src="./images/logo_1.png" alt="">
             <img class="page_home_img" id="page_home_btn" src="./images/btn_start.png" alt="">
         </div>
-        <div id="qablock"> <!-- 問題定位在視窗中固定位置 -->
+        <div id="qablock">
+            <!-- 問題定位在視窗中固定位置 -->
             <div id="ques"></div>
-            <div id="ansA"></div>
-            <div id="ansB"></div>
+            <div class="ansA">
+                <div id="ansA"></div>
+            </div>
+            <div class="ansB">
+                <div id="ansB"></div>
+            </div>
         </div>
     </div>
     <script>
@@ -53,6 +72,7 @@
         let ques = document.getElementById('ques');
         let ansA = document.getElementById('ansA');
         let ansB = document.getElementById('ansB');
+        let qaArrayIndex = 0;
         page_home_btn.addEventListener('click', () => {
             page_home_title_1.classList.add("hidden_title");
             page_home_ip.classList.add("hidden");
@@ -65,7 +85,9 @@
                 page_home_title_1.style = "display:none";
                 tube_bg.style = "top:-1120px"
             }), 1000);
-            Question();
+            console.log(Question());
+            const qaArray = Question()
+            setQa([Question(), qaArrayIndex])
             // console.log(e)
         })
         // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
@@ -123,10 +145,19 @@
             qaArray.sort((a, b) => {
                 return Math.random() - 0.5;
             });
-            console.log(qaArray);
+            qaArray.forEach((item) => {
+                item.a.sort((a, b) => {
+                    return Math.random() - 0.5;
+                })
+            })
+            return qaArray
         }
-
-        
+        function setQa(props) {
+            let [qaArray, index] = props;  // 因為擔心使用IMG一開始會有錯圖警告，因此選用background image
+            ques.style = "background-image:url(./images/" + qaArray[index].q + ".png)";
+            ansA.style = "background-image:url(./images/" + qaArray[index].a[0] + ".png)";
+            ansB.style = "background-image:url(./images/" + qaArray[index].a[1] + ".png)";
+        }
         // let obj = {
 		// 	q: 'QA_Q10',
 		// 	a: [{png : 'QA_Q10_T',ans: true}, {png: 'QA_Q10_F', ans : false}],

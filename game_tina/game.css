@@ -125,6 +125,8 @@ body {
     position: absolute;
     top: 3%;
     left: 2.5%;
+    background-repeat: no-repeat;
+    background-position: left;
 }
 
 #ansA {
@@ -135,6 +137,8 @@ body {
     left: 2%;
     cursor: pointer;
     border: 2px solid blue;
+    background-repeat: no-repeat;
+    background-position: right;
 }
 
 #ansB {
@@ -145,4 +149,6 @@ body {
     left: 51%;
     cursor: pointer;
     border: 2px solid black;
+    background-repeat: no-repeat;
+    background-position: right;
 }
