@@ -88,6 +88,7 @@
         let ansA = document.getElementById('ansA');
         let ansB = document.getElementById('ansB');
         let qaArrayIndex = 0;
+        let randomQaArray = []
         page_home_btn.addEventListener('click', () => {
             page_home_title_1.classList.add("hidden_title");
             page_home_ip.classList.add("hidden");
@@ -100,13 +101,29 @@
                 page_home_title_1.style = "display:none";
                 tube_bg.style = "top:-1120px"
             }), 1000);
-            console.log(Question());
-            const qaArray = Question();
+            randomQaArray = Question();
+            console.log(randomQaArray);
             setTimeout((() => {
-                setQa([Question(), qaArrayIndex])
+                setQa([randomQaArray, qaArrayIndex])
             }), 1500);
 
             // console.log(e)
+        })
+        function answerQuestion (e){
+            console.log(e.target)
+            if(e.target.dataset.answer === "T"){
+                alert('bingo答對了')
+                qaArrayIndex += 1
+                setQa([randomQaArray,qaArrayIndex])
+            }else if(e.target.dataset.answer === "F"){
+                alert('QQ饅頭')
+            }
+        }
+        ansA.addEventListener('click',(e)=>{
+            answerQuestion(e)
+        })
+        ansB.addEventListener('click',(e)=>{
+            answerQuestion(e)
         })
         // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
         //     向右滑
@@ -179,6 +196,8 @@
             ques.style = "background-image:url(./images/" + qaArray[index].q + ".png)";
             ansA.style = "background-image:url(./images/" + qaArray[index].a[0] + ".png)";
             ansB.style = "background-image:url(./images/" + qaArray[index].a[1] + ".png)";
+            ansA.dataset.answer = qaArray[index].a[0].substr(-1,1)
+            ansB.dataset.answer = qaArray[index].a[1].substr(-1,1)
         }
 
         // let obj = {
