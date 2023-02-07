@@ -55,12 +55,27 @@
         <div id="qablock">
             <!-- 問題定位在視窗中固定位置 -->
             <div id="ques"></div>
-            <div class="ansA">
-                <div id="ansA"></div>
+            <div id="ansA"></div>
+            <div id="ansB"></div>
+        </div>
+        <div id="firework"> <!-- 答對的煙火動畫-->
+            <img src="./images/firework.gif" alt="">
+            <img src="./images/testn.gif" alt="">
+        </div>
+        <div id="error"> <!-- 答錯的動畫-->
+            <div id="water"> <!-- 答錯的水管動畫-->
+                <img src="./images/water2.gif" alt="">
             </div>
-            <div class="ansB">
-                <div id="ansB"></div>
+            <div id="turn_block"> <!-- 答錯的彈窗動畫及正確答案-->
+                <div id="turn_block_img"> 
+                    <img src="./images/turn.png" alt="">
+                    <img id="correct_ans" src="./images/QA_Q10_FT.png" alt="">
+                </div>
+                <div id="turn_block_ip">
+                    <img src="./images/IP2.gif" alt="">
+                </div>
             </div>
+                
         </div>
     </div>
     <script>
@@ -86,14 +101,21 @@
                 tube_bg.style = "top:-1120px"
             }), 1000);
             console.log(Question());
-            const qaArray = Question()
-            setQa([Question(), qaArrayIndex])
+            const qaArray = Question();
+            setTimeout((() => {
+                setQa([Question(), qaArrayIndex])
+            }), 1500);
+
             // console.log(e)
         })
         // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
         //     向右滑
         // }
+            // if(){
 
+            // }else{
+
+            // }
     </script>
 
 
@@ -158,6 +180,7 @@
             ansA.style = "background-image:url(./images/" + qaArray[index].a[0] + ".png)";
             ansB.style = "background-image:url(./images/" + qaArray[index].a[1] + ".png)";
         }
+
         // let obj = {
 		// 	q: 'QA_Q10',
 		// 	a: [{png : 'QA_Q10_T',ans: true}, {png: 'QA_Q10_F', ans : false}],

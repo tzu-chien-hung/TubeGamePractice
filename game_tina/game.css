@@ -113,13 +113,13 @@ body {
     position: absolute;
     top: 29.5%;
     left: 5%;
-    border: 1px solid;
+    /* border: 1px solid; */
     width: 90%;
     height: 30.5%;
 }
 
 #ques {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     width: 95%;
     height: 50%;
     position: absolute;
@@ -136,7 +136,7 @@ body {
     top: 54.5%;
     left: 2%;
     cursor: pointer;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     background-repeat: no-repeat;
     background-position: right;
 }
@@ -148,7 +148,69 @@ body {
     top: 54.5%;
     left: 51%;
     cursor: pointer;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     background-repeat: no-repeat;
     background-position: right;
+}
+
+#firework {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#firework img {
+    position: absolute;
+    width: 100%;
+}
+
+#error {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+#water {
+    display: none;
+}
+
+#turn_block {
+    position: absolute;
+    top: 24%;
+    left: 0;
+    /* border: 1px solid; */
+    width: 100%;
+}
+
+#turn_block_img {
+    margin: 0 auto;
+    width: 90%;
+}
+
+/* #turn_block_img img {
+    width: 100%;
+} */
+
+#turn_block_ip {
+    position: absolute;
+    width: 46%;
+    left: 53%;
+    bottom: -45%;
+}
+
+#turn_block_ip img {
+    width: 100%;
+}
+#correct_ans {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 44%;
+    width: 70%;
 }
