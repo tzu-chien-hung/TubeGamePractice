@@ -67,15 +67,15 @@
                 <img src="./images/water2.gif" alt="">
             </div>
             <div id="turn_block"> <!-- 答錯的彈窗動畫及正確答案-->
-                <div id="turn_block_img"> 
+                <div id="turn_block_img">
                     <img src="./images/turn.png" alt="">
-                    <img id="correct_ans" src="./images/QA_Q10_FT.png" alt="">
+                    <div id="correct_ans"></div>
                 </div>
                 <div id="turn_block_ip">
                     <img src="./images/IP2.gif" alt="">
                 </div>
             </div>
-                
+
         </div>
     </div>
     <script>
@@ -88,7 +88,12 @@
         let ansA = document.getElementById('ansA');
         let ansB = document.getElementById('ansB');
         let qaArrayIndex = 0;
-        let randomQaArray = []
+        let randomQaArray = [];
+        let firework = document.getElementById('firework');
+        let error = document.getElementById('error');
+        let water = document.getElementById('water');
+        let correct_ans = document.getElementById('correct_ans');
+        let turn_block_img = document.getElementById('turn_block_img');
         page_home_btn.addEventListener('click', () => {
             page_home_title_1.classList.add("hidden_title");
             page_home_ip.classList.add("hidden");
@@ -104,25 +109,42 @@
             randomQaArray = Question();
             console.log(randomQaArray);
             setTimeout((() => {
-                setQa([randomQaArray, qaArrayIndex])
+                setQa([randomQaArray, qaArrayIndex]);
             }), 1500);
 
             // console.log(e)
         })
-        function answerQuestion (e){
+        function answerQuestion(e) {
             console.log(e.target)
-            if(e.target.dataset.answer === "T"){
-                alert('bingo答對了')
-                qaArrayIndex += 1
-                setQa([randomQaArray,qaArrayIndex])
-            }else if(e.target.dataset.answer === "F"){
-                alert('QQ饅頭')
+            if (e.target.dataset.answer === "T") {
+                // alert('bingo答對了')
+                firework.style = "display:block";
+                setTimeout((() => {
+                    firework.style = "display:none";
+                }), 2000);
+                // console.log(qaArrayIndex)
+                setTimeout((() => {
+                    qaArrayIndex += 1;
+                    setQa([randomQaArray, qaArrayIndex])
+                    // console.log('111');
+                    // console.log(qaArrayIndex)
+                }), 4000);
+            } else if (e.target.dataset.answer === "F") {
+                // alert('QQ饅頭')
+                error.style = "display:block";
+                setTimeout((() => {
+                    water.style = "display:none";
+                    setTimeout((() => {
+                        turn_block.style = "display:block";
+                    }), 500);
+                }), 2000);
+                // error.style = "display:none";
             }
         }
-        ansA.addEventListener('click',(e)=>{
+        ansA.addEventListener('click', (e) => {
             answerQuestion(e)
         })
-        ansB.addEventListener('click',(e)=>{
+        ansB.addEventListener('click', (e) => {
             answerQuestion(e)
         })
         // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
@@ -133,6 +155,9 @@
             // }else{
 
             // }
+            turn_block_img.addEventListener('click',() => {
+                
+            })
     </script>
 
 
@@ -196,8 +221,9 @@
             ques.style = "background-image:url(./images/" + qaArray[index].q + ".png)";
             ansA.style = "background-image:url(./images/" + qaArray[index].a[0] + ".png)";
             ansB.style = "background-image:url(./images/" + qaArray[index].a[1] + ".png)";
-            ansA.dataset.answer = qaArray[index].a[0].substr(-1,1)
-            ansB.dataset.answer = qaArray[index].a[1].substr(-1,1)
+            ansA.dataset.answer = qaArray[index].a[0].substr(-1, 1);
+            ansB.dataset.answer = qaArray[index].a[1].substr(-1, 1);
+            correct_ans.style = "background-image:url(./images/" + qaArray[index].f + ".png)";
         }
 
         // let obj = {

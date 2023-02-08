@@ -60,5 +60,5 @@ if($empty !== true) {
 }
 
 echo "result(".json_encode($result).")";
-v
+
 ?>
