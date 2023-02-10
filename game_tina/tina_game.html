@@ -59,8 +59,8 @@
             <div id="ansB"></div>
         </div>
         <div id="firework"> <!-- 答對的煙火動畫-->
-            <img src="./images/firework.gif" alt="">
-            <img src="./images/testn.gif" alt="">
+            <!-- <img src="./images/firework.gif" alt="">
+            <img src="./images/testn.gif" alt=""> -->
         </div>
         <div id="error"> <!-- 答錯的動畫-->
             <div id="water"> <!-- 答錯的水管動畫-->
@@ -110,17 +110,20 @@
             console.log(randomQaArray);
             setTimeout((() => {
                 setQa([randomQaArray, qaArrayIndex]);
-            }), 1500);
+            }), 2000);
 
             // console.log(e)
         })
         function answerQuestion(e) {
-            console.log(e.target)
+            // console.log(e.target) 
             if (e.target.dataset.answer === "T") {
                 // alert('bingo答對了')
                 firework.style = "display:block";
+                firework.innerHTML= '<img src="./images/firework.gif" alt=""><img src="./images/testn.gif" alt="">';
                 setTimeout((() => {
                     firework.style = "display:none";
+                    // firework.removeAttribute= '<img src="./images/firework.gif" alt=""><img src="./images/testn.gif" alt="">';
+
                 }), 2000);
                 // console.log(qaArrayIndex)
                 setTimeout((() => {

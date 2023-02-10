@@ -27,7 +27,7 @@ body {
     position: absolute;
     left: -2372px;
     top: -156px;
-    transition: .3s;
+    transition: 1s;
 }
 
 .page_home {
