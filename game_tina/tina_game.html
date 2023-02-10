@@ -67,15 +67,15 @@
                 <img src="./images/water2.gif" alt="">
             </div>
             <div id="turn_block"> <!-- 答錯的彈窗動畫及正確答案-->
-                <div id="turn_block_img">
+                <div id="turn_block_img"> 
                     <img src="./images/turn.png" alt="">
-                    <div id="correct_ans"></div>
+                    <img id="correct_ans" src="./images/QA_Q10_FT.png" alt="">
                 </div>
                 <div id="turn_block_ip">
                     <img src="./images/IP2.gif" alt="">
                 </div>
             </div>
-
+                
         </div>
     </div>
     <script>
@@ -94,17 +94,80 @@
         let water = document.getElementById('water');
         let correct_ans = document.getElementById('correct_ans');
         let turn_block_img = document.getElementById('turn_block_img');
+        let pathArrayIndex = 0
+        let 	setPathArray = [{
+			i: "S1",
+			a: ["x: 1051", "y:-392", "2"],
+			sa: ["top:60.2%", "left:-90.1%"],
+			b: ["y:-170", "x:-817", "1"],
+			sb: ["top:60.2%", "left:54.1%"]
+		}, {
+			i: "S2",
+			a: ["y:-709", "y:-80", "3"],
+			sa: ["top:60.2%", "left:11.9%"],
+			b: ["y:-395", "x:-803", "y:-394", "x:+803", "3"],
+			sb: ["top:60.2%", "left:54%"]
+		}, {
+			i: "S2",
+			a: ["y:-710", "y:-78", "4"],
+			sa: ["top:60.2%", "left:11.8%"],
+			b: ["y:-395", "x:-803", "y:-393", "x:+803", "4"],
+			sb: ["top:60.15%", "left:54%"]
+		}, {
+			i: "S4",
+			a: ["y:-350", "x:+1055", "y:-498", "7"],
+			sa: ["top:60.2%", "left:-99.3%"],
+			b: ["y:-300", "x:-400", "y:-313", "x:-400", "6"],
+			sb: ["top:60.2%", "left:54.3%"]
+		}, {
+			i: "S5",
+			a: ["y:-250", "x:+417", "y:+170", "x:+592", "5"],
+			sa: ["top:48.2%", "left:-36.4%"],
+			b: ["y:-627", "x:-813", "7"],
+			sb: ["top:60.1%", "left:54.1%"]
+		}, {
+			i: "S6",
+			a: ["y:-350", "x:+300", "y:-450", "x:-530", "8"],
+			sa: ["top:60.15%", "left:-29.2%"],
+			b: ["y:-550", "x:-230", "y:-250", "8"],
+			sb: ["top:60.2%", "left:54.15%"]
+		}, {
+			i: "S7",
+			a: ["y:-350", "x:+800", "y:-264", "9"],
+			sa: ["top:60.25%", "left:-77.8%"],
+			b: ["y:-614", "x:+800", "9"],
+			sb: ["top:60.3%", "left:-9.2%"]
+		}, {
+			i: "S8",
+			a: ["y:-253", "x:+1592", "8"],
+			sa: ["top:60.25%", "left:-112.4%"],
+			b: ["y:-379", "x:-1055", "9"],
+			sb: ["top:60.3%", "left:54.25%"]
+		}, {
+			i: "S9",
+			a: ["y:-795", "0"],
+			sa: ["top:59.9%", "left:11.67%"],
+			b: ["y:-150", "x:-350", "y:-550", "x:+350", "y:-95", "0"],
+			sb: ["top:60.2%", "left:54.26%"]
+		}, {
+			i: "S9",
+			a: ["y:-795", "0"],
+			sa: ["top:60.2%", "left:11.66%"],
+			b: ["y:-150", "x:-350", "y:-550", "x:+350", "y:-95", "0"],
+			sb: ["top:60.17%", "left:54.33%"]
+		}];
+
         page_home_btn.addEventListener('click', () => {
             page_home_title_1.classList.add("hidden_title");
             page_home_ip.classList.add("hidden");
             page_home_logo.classList.add("hidden");
             page_home_btn.classList.add("hidden");
-            setInterval((() => {
+            setTimeout((() => {
                 page_home_ip.style = "display:none";
                 page_home_logo.style = "display:none";
                 page_home_btn.style = "display:none";
                 page_home_title_1.style = "display:none";
-                tube_bg.style = "top:-1120px"
+                tube_bg.style = "top:-1120px;left: -2372px"
             }), 1000);
             randomQaArray = Question();
             console.log(randomQaArray);
@@ -114,7 +177,7 @@
 
             // console.log(e)
         })
-        function answerQuestion(e) {
+        function answerQuestion(e,top,left,AorB) {
             console.log(e.target)
             if (e.target.dataset.answer === "T") {
                 // alert('bingo答對了')
@@ -122,13 +185,14 @@
                 setTimeout((() => {
                     firework.style = "display:none";
                 }), 2000);
-                // console.log(qaArrayIndex)
+                
                 setTimeout((() => {
                     qaArrayIndex += 1;
                     setQa([randomQaArray, qaArrayIndex])
                     // console.log('111');
                     // console.log(qaArrayIndex)
                 }), 4000);
+                delayMove(top,left,AorB)
             } else if (e.target.dataset.answer === "F") {
                 // alert('QQ饅頭')
                 error.style = "display:block";
@@ -141,11 +205,48 @@
                 // error.style = "display:none";
             }
         }
+        const delayMove = (top,left,AorB)=>{
+            let path = setPathArray[pathArrayIndex][AorB];
+            let length = path.length - 1;
+            let i = 0
+            console.log("???")
+            let movePath = setInterval(()=>{
+                console.log('test')
+                if(path[i][0] === "x"){
+                    console.log(Number(left.replace("px","")) + Number(path[i].slice(2,10)))
+                    tube_bg.style.left = (Number(left.replace("px","")) + Number(path[i].slice(2,10))) + "px"
+                    left = tube_bg.style.left
+                    i++
+                    if(i === length){
+                        clearInterval(movePath)
+                        pathArrayIndex = Number(path[path.length - 1]);
+                    }
+                }else if(path[i][0] === "y"){
+                    console.log(Number(top.replace("px","")) + Number(path[i].slice(2,10)))
+                    tube_bg.style.top = (Number(top.replace("px","")) + Number(path[i].slice(2,10))) + "px"
+                    top = tube_bg.style.top
+                    i++
+                    if(i === length){
+                        clearInterval(movePath)
+                        pathArrayIndex = Number(path[path.length - 1]);
+                    }
+                }
+            },1000)
+
+        }
         ansA.addEventListener('click', (e) => {
-            answerQuestion(e)
+            let top = tube_bg.style.top;
+            let left = tube_bg.style.left
+            console.log(top,left,'???')
+            answerQuestion(e,top,left,"a");
+            // delayMove(top,left,"a")
         })
         ansB.addEventListener('click', (e) => {
-            answerQuestion(e)
+            let top = tube_bg.style.top;
+            let left = tube_bg.style.left
+            console.log(top,left,'???')
+            answerQuestion(e,top,left,"b")
+            // delayMove(top,left,"b")
         })
         // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
         //     向右滑
@@ -221,9 +322,8 @@
             ques.style = "background-image:url(./images/" + qaArray[index].q + ".png)";
             ansA.style = "background-image:url(./images/" + qaArray[index].a[0] + ".png)";
             ansB.style = "background-image:url(./images/" + qaArray[index].a[1] + ".png)";
-            ansA.dataset.answer = qaArray[index].a[0].substr(-1, 1);
-            ansB.dataset.answer = qaArray[index].a[1].substr(-1, 1);
-            correct_ans.style = "background-image:url(./images/" + qaArray[index].f + ".png)";
+            ansA.dataset.answer = qaArray[index].a[0].substr(-1,1)
+            ansB.dataset.answer = qaArray[index].a[1].substr(-1,1)
         }
 
         // let obj = {
