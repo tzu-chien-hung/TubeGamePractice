@@ -15,6 +15,7 @@ body {
     height: 843px;
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
 }
 
 .img {
@@ -42,6 +43,14 @@ body {
     width: 33.1%;
 }
 
+.page_qa_ip {
+    position: absolute;
+    top: 110%;
+    right: 5%;
+    width: 33.1%;
+    display: none;
+    animation: show 1s ease-out;
+}
 #page_home_title_1 {
     position: absolute;
     right: 2%;
@@ -95,6 +104,16 @@ body {
 
     100% {
         opacity: 0;
+    }
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
 
