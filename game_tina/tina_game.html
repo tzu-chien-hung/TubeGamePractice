@@ -244,9 +244,11 @@
                 }
                 // console.log(qaArrayIndex + '外');
             } else {
+                
                 setTimeout((() => {
                     firework.style = "display:none";
                     delayMove(top, left, AorB, "T");
+                    qaArrayIndex += 1
                     // alert('全部都bingo答對了');
 
                 }), 2000);
@@ -296,6 +298,7 @@
                         qaBlockTop = 0;
                         setTimeout((() => {
                             if(qaArrayIndex < 5){
+                                console.log(qaArrayIndex,'?????')
                                 qablock.style = 'display:block';
                             }
                         }), 2000);
@@ -315,6 +318,7 @@
                         qaBlockTop = 0;
                         setTimeout((() => {
                             if(qaArrayIndex < 5){
+                                console.log(qaArrayIndex,'?????')
                                 qablock.style = 'display:block';
                             }
                         }), 2000);
