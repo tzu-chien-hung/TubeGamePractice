@@ -47,9 +47,8 @@ body {
     width: 33.1%;
 }
 
-#page_o_ip {
+#page_o_ip {}
 
-}
 /* .page_qa_ip {
     position: absolute;
     top: 110%;
@@ -148,6 +147,18 @@ body {
     }
 }
 
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 #qablock {
     position: absolute;
     top: 29.5%;
@@ -216,6 +227,7 @@ body {
     top: 0;
     left: 0;
     display: none;
+    z-index: 10;
 }
 
 #water {

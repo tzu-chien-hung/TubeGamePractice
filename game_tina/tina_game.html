@@ -244,11 +244,16 @@
                 }
                 // console.log(qaArrayIndex + '外');
             } else {
-                firework.style = "display:block";
                 setTimeout((() => {
                     firework.style = "display:none";
-                    alert('全部都bingo答對了');
+                    delayMove(top, left, AorB, "T");
+                    // alert('全部都bingo答對了');
+
                 }), 2000);
+                setTimeout((() => {
+                    qablock.style = 'display:none';
+                }), 3000)
+                
             }
         }
         // const tubeDelayMove = (div, path, top, left) => {
@@ -258,31 +263,26 @@
             let path = setPathArray[pathArrayIndex][AorB];
             let name = setPathArray[pathArrayIndex].i;
             let [top_o, left_o] = setPathArray[pathArrayIndex][`s${AorB}`];
-            // let tubeLeft = 0;
-            // let tubeTop = 0;
             let length = path.length - 1;
             let qaBlockLeft = 0;
             let qaBlockTop = 0;
             let old_div = document.querySelectorAll('.tube_display_none');
-            // console.log(old_div);
             let i = 0;
             let div = document.createElement('div');
             let img = document.createElement('img');
             div.classList.add('tube_display_none');
             if (qaArrayIndex !== 0) {
                 old_div[qaArrayIndex - 1].style = 'display:none;';
+                console.log("3/6" + qaArrayIndex)
             }
             div.style = `position: absolute; top:calc(${top_o}); left:calc(${left_o});z-index: 3;transition:1s;`;
             img.src = `./images/${name}_${AorB.toUpperCase()}_${TorF}.png`;
-            img.style = `@keyframes blink{0%{opacity: 1;}100%{opacity: 0;} }animation: blink 3s linear infinite;`;
+            img.style = `animation:.7s blink 3;`;
             div.appendChild(img);
             window_div.appendChild(div);
             if (TorF === 'F') return;
             let movePath = setInterval(() => {
                 if (path[i][0] === "x") {
-                    // div.style = `position: absolute; top:calc(${top_o} + ${qaBlockTop}px); left:calc(${left_o} +${qaBlockLeft}px);z-index: 3;`;
-
-                    // console.log(Number(left.replace("px", "")) + Number(path[i].slice(2, 10)))
                     tube_bg.style.left = (Number(left.replace("px", "")) + Number(path[i].slice(2, 10))) + "px";
                     qaBlockLeft += Number(path[i].slice(2, 10));
                     qablock.style.left = `calc(5% + ${qaBlockLeft}px)`;
@@ -295,11 +295,12 @@
                         qaBlockLeft = 0;
                         qaBlockTop = 0;
                         setTimeout((() => {
-                            qablock.style = 'display:block';
+                            if(qaArrayIndex < 5){
+                                qablock.style = 'display:block';
+                            }
                         }), 2000);
                     }
                 } else if (path[i][0] === "y") {
-                    // console.log(Number(top.replace("px", "")) + Number(path[i].slice(2, 10)))
                     tube_bg.style.top = (Number(top.replace("px", "")) + Number(path[i].slice(2, 10))) + "px";
                     qaBlockTop += Number(path[i].slice(2, 10));
                     qablock.style.top = `calc(29.5% + ${qaBlockTop}px)`;
@@ -313,7 +314,9 @@
                         qaBlockLeft = 0;
                         qaBlockTop = 0;
                         setTimeout((() => {
-                            qablock.style = 'display:block';
+                            if(qaArrayIndex < 5){
+                                qablock.style = 'display:block';
+                            }
                         }), 2000);
                     }
                 }
