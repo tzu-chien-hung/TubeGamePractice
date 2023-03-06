@@ -10,7 +10,7 @@ body {
     font-family: 'Noto Sans TC', sans-serif;
 }
 
-.window {
+#window {
     width: 768px;
     height: 843px;
     position: relative;
@@ -31,6 +31,10 @@ body {
     transition: 1s;
 }
 
+#block {
+    z-index: 4;
+}
+
 .page_home {
     position: relative;
     height: 100%;
@@ -43,14 +47,18 @@ body {
     width: 33.1%;
 }
 
-.page_qa_ip {
+#page_o_ip {
+
+}
+/* .page_qa_ip {
     position: absolute;
     top: 110%;
     right: 5%;
     width: 33.1%;
     display: none;
     animation: show 1s ease-out;
-}
+} */
+
 #page_home_title_1 {
     position: absolute;
     right: 2%;
@@ -73,6 +81,7 @@ body {
     width: 69.5%;
     animation: scale 1s infinite;
     cursor: pointer;
+    z-index: 4;
 }
 
 .hidden_title {
@@ -128,13 +137,26 @@ body {
     }
 }
 
+
+@keyframes twinkle {
+    0% {
+        opacity: .0.8;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 #qablock {
     position: absolute;
     top: 29.5%;
     left: 5%;
+    z-index: 4;
     /* border: 1px solid; */
     width: 90%;
     height: 30.5%;
+    transition: 1s;
 }
 
 #ques {
@@ -178,6 +200,7 @@ body {
     height: 100%;
     top: 0;
     left: 0;
+    z-index: 10;
     display: none;
 }
 
@@ -222,16 +245,17 @@ body {
     width: 100%;
 } */
 
-#turn_block_ip {
+#page_qa_ip {
     position: absolute;
     width: 46%;
     left: 53%;
     bottom: 8%;
 }
 
-#turn_block_ip img {
+#page_qa_ip img {
     width: 100%;
 }
+
 #correct_ans {
     position: absolute;
     left: 50%;

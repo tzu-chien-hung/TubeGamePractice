@@ -17,6 +17,9 @@
     <link rel="preload" href="./images/send_1.png" as="image" />
     <link rel="preload" href="./images/white_frame.png" as="image" />
     <link rel="preload" href="./images/turn.png" as="image" />
+    <link rel="preload" as="audio" href="./music/FunnyGamePuzzleMusic.mp3">
+    <link rel="preload" as="audio" href="./music/correct.mp3">
+    <link rel="preload" as="audio" href="./music/Mistake.mp3">
     <link rel="stylesheet" href="game.css">
     <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
     <style>
@@ -39,12 +42,20 @@
 </head>
 
 <body>
-    <div class="window">
+    <audio id="music_correct" src="./music/correct.mp3" preload="auto"></audio>
+    <audio id="music_mistake" src="./music/Mistake.mp3" preload="auto"></audio>
+    <audio id="music_game_music" src="./music/FunnyGamePuzzleMusic.mp3" preload="auto" loop="true"></audio>
+    <audio id="music_start" src="./music/StartGame.mp3" preload="auto" loop="true"></audio>
+
+    <div id="window">
+        <!-- <div style="position: absolute; top:60.2%; left:-90.1%;z-index: 3;">
+            <img src="./images/S1_A_T.png" alt="">
+        </div> -->
         <!-- 背景圖片們 -->
         <img class="img" src="./images/bg.jpg" alt="">
         <img class="img" src="./images/bg_eff60.png" alt="">
         <img id="tube_bg" src="./images/pipe.png" alt="">
-        <img class="img" src="./images/white_frame.png" alt="">
+        <img id="block" class="img" src="./images/white_frame.png" alt="">
         <div class="page_home">
             <!-- 首頁圖片內容 -->
             <img id="page_home_ip" src="./images/IP0.gif" alt="">
@@ -59,7 +70,10 @@
             <div id="ansB"></div>
             <div id="page_qa_ip"></div>
         </div>
-        <div id="firework"><!-- 答對的煙火動畫--></div>
+        <div id="firework"><!-- 答對的煙火動畫-->
+            <img id="firework_gif01" src="./images/firework.gif" alt="">
+            <img id="firework_gif02" src="./images/testn.gif" alt="">
+        </div>
         <div id="error"> <!-- 答錯的動畫-->
             <div id="water"> <!-- 答錯的水管動畫-->
                 <img src="./images/water2.gif" alt="">
@@ -69,94 +83,107 @@
                     <img src="./images/turn.png" alt="">
                     <div id="correct_ans"></div>
                 </div>
-                <div id="turn_block_ip">
+                <!-- <div id="turn_block_ip">
                     <img src="./images/IP2.gif" alt="">
-                </div>
+                </div> -->
             </div>
-
         </div>
     </div>
     <script>
+        let window_div = document.getElementById('window');
         let page_home_ip = document.getElementById('page_home_ip');
         let page_qa_ip = document.getElementById('page_qa_ip');
         let page_home_title_1 = document.getElementById('page_home_title_1');
         let page_home_logo = document.getElementById('page_home_logo');
         let page_home_btn = document.getElementById('page_home_btn');
         let tube_bg = document.getElementById('tube_bg');
+        let qablock = document.getElementById('qablock');
         let ques = document.getElementById('ques');
         let ansA = document.getElementById('ansA');
         let ansB = document.getElementById('ansB');
         let qaArrayIndex = 0;
         let randomQaArray = [];
         let firework = document.getElementById('firework');
+        let firework_gif01 = document.getElementById('firework_gif01');
+        let firework_gif02 = document.getElementById('firework_gif02');
         let error = document.getElementById('error');
         let water = document.getElementById('water');
         let correct_ans = document.getElementById('correct_ans');
         let turn_block_img = document.getElementById('turn_block_img');
-        let pathArrayIndex = 0
+        let pathArrayIndex = 0;
+        // ================== 遊戲音效 ================== //
+        let music_correct = document.getElementById("music_correct");
+        let music_mistake = document.getElementById("music_mistake");
+        let music_game_music = document.getElementById("music_game_music");
         let setPathArray = [{
             i: "S1",
             a: ["x: 1051", "y:-392", "2"],
-            sa: ["top:60.2%", "left:-90.1%"],
+            sa: ["60.2%", "-90.1%"],
             b: ["y:-170", "x:-817", "1"],
-            sb: ["top:60.2%", "left:54.1%"]
+            sb: ["60.2%", "54.1%"]
         }, {
             i: "S2",
             a: ["y:-709", "y:-80", "3"],
-            sa: ["top:60.2%", "left:11.9%"],
+            sa: ["60.2%", "11.9%"],
             b: ["y:-395", "x:-803", "y:-394", "x:+803", "3"],
-            sb: ["top:60.2%", "left:54%"]
+            sb: ["60.2%", "54%"]
         }, {
             i: "S2",
             a: ["y:-710", "y:-78", "4"],
-            sa: ["top:60.2%", "left:11.8%"],
+            sa: ["60.2%", "11.8%"],
             b: ["y:-395", "x:-803", "y:-393", "x:+803", "4"],
-            sb: ["top:60.15%", "left:54%"]
+            sb: ["60.15%", "54%"]
         }, {
             i: "S4",
             a: ["y:-350", "x:+1055", "y:-498", "7"],
-            sa: ["top:60.2%", "left:-99.3%"],
+            sa: ["60.2%", "-99.3%"],
             b: ["y:-300", "x:-400", "y:-313", "x:-400", "6"],
-            sb: ["top:60.2%", "left:54.3%"]
+            sb: ["60.2%", "54.3%"]
         }, {
             i: "S5",
             a: ["y:-250", "x:+417", "y:+170", "x:+592", "5"],
-            sa: ["top:48.2%", "left:-36.4%"],
+            sa: ["48.2%", "-36.4%"],
             b: ["y:-627", "x:-813", "7"],
-            sb: ["top:60.1%", "left:54.1%"]
+            sb: ["60.1%", "54.1%"]
         }, {
             i: "S6",
             a: ["y:-350", "x:+300", "y:-450", "x:-530", "8"],
-            sa: ["top:60.15%", "left:-29.2%"],
+            sa: ["60.15%", "-29.2%"],
             b: ["y:-550", "x:-230", "y:-250", "8"],
-            sb: ["top:60.2%", "left:54.15%"]
+            sb: ["60.2%", "54.15%"]
         }, {
             i: "S7",
             a: ["y:-350", "x:+800", "y:-264", "9"],
-            sa: ["top:60.25%", "left:-77.8%"],
+            sa: ["60.25%", "-77.8%"],
             b: ["y:-614", "x:+800", "9"],
-            sb: ["top:60.3%", "left:-9.2%"]
+            sb: ["60.3%", "-9.2%"]
         }, {
             i: "S8",
             a: ["y:-253", "x:+1592", "8"],
-            sa: ["top:60.25%", "left:-112.4%"],
+            sa: ["60.25%", "-112.4%"],
             b: ["y:-379", "x:-1055", "9"],
-            sb: ["top:60.3%", "left:54.25%"]
+            sb: ["60.3%", "54.25%"]
         }, {
             i: "S9",
             a: ["y:-795", "0"],
-            sa: ["top:59.9%", "left:11.67%"],
+            sa: ["59.9%", "11.67%"],
             b: ["y:-150", "x:-350", "y:-550", "x:+350", "y:-95", "0"],
-            sb: ["top:60.2%", "left:54.26%"]
+            sb: ["60.2%", "54.26%"]
         }, {
             i: "S9",
             a: ["y:-795", "0"],
-            sa: ["top:60.2%", "left:11.66%"],
+            sa: ["60.2%", "11.66%"],
             b: ["y:-150", "x:-350", "y:-550", "x:+350", "y:-95", "0"],
-            sb: ["top:60.17%", "left:54.33%"]
+            sb: ["60.17%", "54.33%"]
         }];
 
         page_home_btn.addEventListener('click', () => {
+            // music_correct.play();
+            // music_correct.pause();
+            // music_mistake.play();
+            // music_mistake.pause();
+            // music_game_music.play();
+            // music_game_music.pause();
             page_home_title_1.classList.add("hidden_title");
             page_home_ip.classList.add("hidden");
             page_home_logo.classList.add("hidden");
@@ -173,7 +200,7 @@
             setTimeout((() => {
                 setQa([randomQaArray, qaArrayIndex]);
                 setTimeout((() => {
-                    page_qa_ip.setAttribute = ''
+                    // page_qa_ip.setAttribute = ''
                     page_qa_ip.style = "display:block";
                 }), 500);
             }), 2000);
@@ -181,27 +208,30 @@
             // console.log(e)
         })
         function answerQuestion(e, top, left, AorB) {
-            console.log(e.target)
+            // console.log(e.target)
             if (qaArrayIndex < 4) {
                 if (e.target.dataset.answer === "T") {
                     // alert('bingo答對了')
+                    // music_correct.play();
                     firework.style = "display:block";
-                    firework.innerHTML = '<img src="./images/firework.gif" alt=""><img src="./images/testn.gif" alt="">';
                     setTimeout((() => {
                         firework.style = "display:none";
-                        // firework.removeAttribute= '<img src="./images/firework.gif" alt=""><img src="./images/testn.gif" alt="">';
-
-                    }), 2000);
-
+                        firework_gif01.src = './images/firework.gif';
+                        firework_gif02.src = './images/testn.gif';
+                    }), 3000);
+                    setTimeout((() => {
+                        qablock.style = 'display:none';
+                    }), 3000);
                     setTimeout((() => {
                         qaArrayIndex += 1;
-                        setQa([randomQaArray, qaArrayIndex])
-                        // console.log('111');
-                        // console.log(qaArrayIndex)
+                        setQa([randomQaArray, qaArrayIndex]);
+                        // qablock.style = 'display:block';
                     }), 4000);
-                    delayMove(top, left, AorB)
+                    delayMove(top, left, AorB, "T");
+                    // createColorTube();
                 } else if (e.target.dataset.answer === "F") {
                     // alert('QQ饅頭')
+                    // music_mistake.play();
                     error.style = "display:block";
                     setTimeout((() => {
                         water.style = "display:none";
@@ -209,43 +239,100 @@
                             turn_block.style = "display:block";
                         }), 500);
                     }), 2000);
+                    delayMove(top, left, AorB, "F");
                     // error.style = "display:none";
                 }
+                // console.log(qaArrayIndex + '外');
             } else {
+                firework.style = "display:block";
                 setTimeout((() => {
+                    firework.style = "display:none";
                     alert('全部都bingo答對了');
                 }), 2000);
             }
         }
-        const delayMove = (top, left, AorB) => {
+        // const tubeDelayMove = (div, path, top, left) => {
+        // }
+
+        const delayMove = (top, left, AorB, TorF) => {
             let path = setPathArray[pathArrayIndex][AorB];
+            let name = setPathArray[pathArrayIndex].i;
+            let [top_o, left_o] = setPathArray[pathArrayIndex][`s${AorB}`];
+            // let tubeLeft = 0;
+            // let tubeTop = 0;
             let length = path.length - 1;
-            let i = 0
-            console.log("???")
+            let qaBlockLeft = 0;
+            let qaBlockTop = 0;
+            let old_div = document.querySelectorAll('.tube_display_none');
+            // console.log(old_div);
+            let i = 0;
+            let div = document.createElement('div');
+            let img = document.createElement('img');
+            div.classList.add('tube_display_none');
+            if (qaArrayIndex !== 0) {
+                old_div[qaArrayIndex - 1].style = 'display:none;';
+            }
+            div.style = `position: absolute; top:calc(${top_o}); left:calc(${left_o});z-index: 3;transition:1s;`;
+            img.src = `./images/${name}_${AorB.toUpperCase()}_${TorF}.png`;
+            img.style = `@keyframes blink{0%{opacity: 1;}100%{opacity: 0;} }animation: blink 3s linear infinite;`;
+            div.appendChild(img);
+            window_div.appendChild(div);
+            if (TorF === 'F') return;
             let movePath = setInterval(() => {
-                console.log('test')
                 if (path[i][0] === "x") {
-                    console.log(Number(left.replace("px", "")) + Number(path[i].slice(2, 10)))
-                    tube_bg.style.left = (Number(left.replace("px", "")) + Number(path[i].slice(2, 10))) + "px"
-                    left = tube_bg.style.left
-                    i++
+                    // div.style = `position: absolute; top:calc(${top_o} + ${qaBlockTop}px); left:calc(${left_o} +${qaBlockLeft}px);z-index: 3;`;
+
+                    // console.log(Number(left.replace("px", "")) + Number(path[i].slice(2, 10)))
+                    tube_bg.style.left = (Number(left.replace("px", "")) + Number(path[i].slice(2, 10))) + "px";
+                    qaBlockLeft += Number(path[i].slice(2, 10));
+                    qablock.style.left = `calc(5% + ${qaBlockLeft}px)`;
+                    div.style.left = `calc(${left_o} + ${qaBlockLeft}px)`;
+                    left = tube_bg.style.left;
+                    i++;
                     if (i === length) {
-                        clearInterval(movePath)
+                        clearInterval(movePath);
                         pathArrayIndex = Number(path[path.length - 1]);
+                        qaBlockLeft = 0;
+                        qaBlockTop = 0;
+                        setTimeout((() => {
+                            qablock.style = 'display:block';
+                        }), 2000);
                     }
                 } else if (path[i][0] === "y") {
-                    console.log(Number(top.replace("px", "")) + Number(path[i].slice(2, 10)))
-                    tube_bg.style.top = (Number(top.replace("px", "")) + Number(path[i].slice(2, 10))) + "px"
-                    top = tube_bg.style.top
+                    // console.log(Number(top.replace("px", "")) + Number(path[i].slice(2, 10)))
+                    tube_bg.style.top = (Number(top.replace("px", "")) + Number(path[i].slice(2, 10))) + "px";
+                    qaBlockTop += Number(path[i].slice(2, 10));
+                    qablock.style.top = `calc(29.5% + ${qaBlockTop}px)`;
+                    div.style.top = `calc(${top_o} + ${qaBlockTop}px)`;
+                    console.log(div.style.top)
+                    top = tube_bg.style.top;
                     i++
                     if (i === length) {
-                        clearInterval(movePath)
+                        clearInterval(movePath);
                         pathArrayIndex = Number(path[path.length - 1]);
+                        qaBlockLeft = 0;
+                        qaBlockTop = 0;
+                        setTimeout((() => {
+                            qablock.style = 'display:block';
+                        }), 2000);
                     }
                 }
             }, 1000)
 
         }
+
+        // <div style="position: absolute; top:60.2%; left:-90.1%;z-index: 3;">
+        //     <img src="./images/S1_A_T.png" alt="">
+        // </div>
+
+        // function createColorTube(top, left, name, AorB, TorF) {
+        //     let div = document.createElement('div');
+        //     let img = document.createElement('img');
+        //     div.style = `position: absolute; top:calc(${top}); left:calc(${left});z-index: 3;`;
+        //     img.src = `./images/${name}_${AorB.toUpperCase()}_${TorF}.png`;
+        //     div.appendChild(img);
+        //     window_div.appendChild(div);
+        // }
         ansA.addEventListener('click', (e) => {
             let top = tube_bg.style.top;
             let left = tube_bg.style.left
@@ -272,9 +359,6 @@
 
         })
     </script>
-
-
-
     <script>
         // let array = ['ans1','ans2'];
         function Question() {
@@ -327,7 +411,7 @@
                     return Math.random() - 0.5;
                 })
             })
-            return qaArray
+            return qaArray;
         }
         function setQa(props) {
             let [qaArray, index] = props;  // 因為擔心使用IMG一開始會有錯圖警告，因此選用background image
