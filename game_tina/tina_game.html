@@ -184,7 +184,7 @@
             // music_correct.pause();
             // music_mistake.play();
             // music_mistake.pause();
-            // music_game_music.play();
+            music_game_music.play();
             // music_game_music.pause();
             page_home_title_1.classList.add("hidden_title");
             page_home_ip.classList.add("hidden");
@@ -206,15 +206,11 @@
                     page_qa_ip.style = "display:block";
                 }), 500);
             }), 2000);
-
-            // console.log(e)
         })
         function answerQuestion(e, top, left, AorB) {
-            // console.log(e.target)
             if (qaArrayIndex < 4) {
                 if (e.target.dataset.answer === "T") {
-                    // alert('bingo答對了')
-                    // music_correct.play();
+                    music_correct.play();
                     firework.style = "display:block";
                     setTimeout((() => {
                         firework.style = "display:none";
@@ -227,13 +223,11 @@
                     setTimeout((() => {
                         qaArrayIndex += 1;
                         setQa([randomQaArray, qaArrayIndex]);
-                        // qablock.style = 'display:block';
                     }), 4000);
                     delayMove(top, left, AorB, "T");
                     // createColorTube();
                 } else if (e.target.dataset.answer === "F") {
-                    // alert('QQ饅頭')
-                    // music_mistake.play();
+                    music_mistake.play();
                     error.style = "display:block";
                     setTimeout((() => {
                         water.style = "display:none";
@@ -242,26 +236,18 @@
                         }), 500);
                     }), 2000);
                     delayMove(top, left, AorB, "F");
-                    // error.style = "display:none";
                 }
-                // console.log(qaArrayIndex + '外');
             } else {
-                
-                setTimeout((() => {
-                    firework.style = "display:none";
-                    delayMove(top, left, AorB, "T");
-                    qaArrayIndex += 1
-                    // alert('全部都bingo答對了');
-
-                }), 2000);
+                firework.style = "display:block";
+                delayMove(top, left, AorB, "T");
+                qaArrayIndex += 1
                 setTimeout((() => {
                     qablock.style = 'display:none';
+                    firework.style = "display:none";
                 }), 3000)
-                
+
             }
         }
-        // const tubeDelayMove = (div, path, top, left) => {
-        // }
 
         const delayMove = (top, left, AorB, TorF) => {
             let path = setPathArray[pathArrayIndex][AorB];
@@ -299,8 +285,8 @@
                         qaBlockLeft = 0;
                         qaBlockTop = 0;
                         setTimeout((() => {
-                            if(qaArrayIndex < 5){
-                                console.log(qaArrayIndex,'?????')
+                            if (qaArrayIndex < 5) {
+                                console.log(qaArrayIndex, '?????')
                                 qablock.style = 'display:block';
                             }
                         }), 2000);
@@ -319,8 +305,8 @@
                         qaBlockLeft = 0;
                         qaBlockTop = 0;
                         setTimeout((() => {
-                            if(qaArrayIndex < 5){
-                                console.log(qaArrayIndex,'?????')
+                            if (qaArrayIndex < 5) {
+                                console.log(qaArrayIndex, '?????')
                                 qablock.style = 'display:block';
                             }
                         }), 2000);
@@ -330,46 +316,23 @@
 
         }
 
-        // <div style="position: absolute; top:60.2%; left:-90.1%;z-index: 3;">
-        //     <img src="./images/S1_A_T.png" alt="">
-        // </div>
-
-        // function createColorTube(top, left, name, AorB, TorF) {
-        //     let div = document.createElement('div');
-        //     let img = document.createElement('img');
-        //     div.style = `position: absolute; top:calc(${top}); left:calc(${left});z-index: 3;`;
-        //     img.src = `./images/${name}_${AorB.toUpperCase()}_${TorF}.png`;
-        //     div.appendChild(img);
-        //     window_div.appendChild(div);
-        // }
         ansA.addEventListener('click', (e) => {
             let top = tube_bg.style.top;
             let left = tube_bg.style.left
             console.log(top, left, '???')
             answerQuestion(e, top, left, "a");
-            // delayMove(top,left,"a")
         })
         ansB.addEventListener('click', (e) => {
             let top = tube_bg.style.top;
             let left = tube_bg.style.left
             console.log(top, left, '???')
             answerQuestion(e, top, left, "b")
-            // delayMove(top,left,"b")
         })
-        // if (i === "T" && (ansa === 'T' || ansb === 'T')) {
-        //     向右滑
-        // }
-        // if(){
-
-        // }else{
-
-        // }
         turn_block_img.addEventListener('click', () => {
 
         })
     </script>
     <script>
-        // let array = ['ans1','ans2'];
         function Question() {
             qaArray = [{
                 q: 'QA_Q1',
@@ -432,15 +395,6 @@
             correct_ans.style = "background-image:url(./images/" + qaArray[index].f + ".png)";
         }
 
-        // let obj = {
-		// 	q: 'QA_Q10',
-		// 	a: [{png : 'QA_Q10_T',ans: true}, {png: 'QA_Q10_F', ans : false}],
-		// 	f: 'QA_Q10_FT'
-		// };
-        //  let ans = obj.css("background-image").split("/").reverse()[0].split(".png")[0].slice(-1);
-        //  'url("http://127.0.0.1:5500/game/QA_Q9_T.png")'
-        // ['url("http:',"",'127.0.0.1:5500','game','QA_Q9_T.png']
-        // Math.random
     </script>
 </body>
 
